@@ -2,7 +2,11 @@
 title: "Visualizing Super Tuesday and Beyond"
 author: "Devraj Kori"
 date: "3/4/2020"
-output: distill::distill_article
+preview: http://devrajkori.com/wp-content/uploads/2020/03/sanders-projected-actual.png
+output:
+  html_document:
+    includes:
+       in_header: myheader.html
 repository_url: https://github.com/dkori/visualize-super-tuesday
 ---
 
@@ -87,11 +91,11 @@ state_geometries<-get_acs(year=2018,variables=c("total_pop" = "B01001_001"),geog
 
 ```{r retrieve_wiki_table,include=FALSE}
 #grab delegate counts from each state
-wiki_url<-"https://en.wikipedia.org/w/index.php?title=2020_Democratic_Party_presidential_primaries&diff=943986491&oldid=943986233"
+wiki_url<-"https://en.wikipedia.org/w/index.php?title=2020_Democratic_Party_presidential_primaries&oldid=943970677"
 
 delegate_table<-wiki_url%>%
   read_html()%>%
-  html_nodes(css='#mw-content-text > div.mw-parser-output > table:nth-child(128)')%>%
+  html_nodes(css='#mw-content-text > div > table:nth-child(126)')%>%
   html_table(fill=TRUE)
 delegate_table2<-delegate_table[[1]]
 
@@ -209,7 +213,9 @@ leaflet()%>%
 
 ```
 
+
 When really, something like this better shows the impact of victories in each state. 
+
 ```{r state_delegate, echo=FALSE,warning=FALSE,message=FALSE}
 super_tuesday_delegates<-win_counter%>%
   filter(grepl("Tuesday",Date))%>%
@@ -377,6 +383,7 @@ sanders_comparison<-pop_vote3%>%
 
 sanders_comparison
 
+
 ```
 
 
@@ -472,9 +479,9 @@ with_absorbed<-polling_by_candidate%>%
 with_absorbed
 ```
 
-The chart above entertains the idea of Warren dropping out and enthusiastically endorsing Sanders so effectively that all of her supporters switch to Sanders. Similar, it shows all Klobuchar and Buttigieg supporters in remaining states realigning to support Biden. This obviously won't happen in totality, but it gives us some idea of how a potential endorsement would change things. This looks slightly less bleak for Sanders. A handful of states shift above the line, but the gap does grow larger in other large states (notably Florida). 
+The chart above entertains the idea of Warren ~~dropping out and~~ enthusiastically endorsing Sanders so effectively that all of her supporters switch to Sanders. Similar, it shows all Klobuchar and Buttigieg supporters in remaining states realigning to support Biden. This obviously won't happen in totality, but it gives us some idea of how a potential endorsement would change things. This looks slightly less bleak for Sanders. A handful of states shift above the line, but the gap does grow larger in other large states (notably Florida). 
 
-To be clear, Warren hasn't dropped out yet and hasn't really indicated that she plans to. I won't comment on how many of her supporters are likely to support Sanders even if she does drop out and endorse him, but to have a chance, Sanders would need it to be **a lot**. 
+~~To be clear, Warren hasn't dropped out yet and hasn't really indicated that she plans to.~~ I won't comment on how many of her supporters are likely to support Sanders even if she does drop out and endorse him, but to have a chance, Sanders would need it to be **a lot**. 
 
 As bleak as the picture is for Sanders, it's worth noting that we should be less confident in these current estimates than we were for Super Tuesday states. 
 
@@ -569,3 +576,4 @@ rbind(all_polls,quality_polls,delegates_remaining)%>%
 ```
 
 While almost two-thirds of all pledged delegates are still up for grabs, fewer than half of all polls conducted by quality pollsters were conducted on remaining states. This may cast some doubt on the poll averages of future contests, which seem to show the race is Biden's to lose, but its difficult to quantify the extent.
+
